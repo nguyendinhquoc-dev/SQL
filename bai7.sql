@@ -1,0 +1,131 @@
+﻿-- bo mon 
+-- lop 
+-- giao vien
+-- hoc sinh
+
+ --TAO DATABASE <TRUONG HOC>
+ CREATE DATABASE TRUONGHOC
+
+ GO
+ USE TRUONGHOC
+ GO
+ --TAO BANG LOP
+ CREATE TABLE LOP
+ (
+	MALOP CHAR(5) NOT NULL PRIMARY KEY,
+	TENLOP NVARCHAR(30) DEFAULT N'LỚP TÀI NĂNG',
+	SOLUONG INT,
+ )
+ 
+ GO
+
+ -- TAO BANG BO MON 
+ CREATE TABLE BOMON
+ (
+	MABM CHAR(5) NOT NULL,
+	TENBM NVARCHAR(30) DEFAULT N'MÔN ELON MUSK',
+
+	PRIMARY KEY(MABM)
+ )
+
+ GO
+
+ -- TAO BANG GIAO VIEN 
+CREATE TABLE GIAOVIEN
+(
+	MAGV CHAR(5) NOT NULL,
+	TENGV NVARCHAR(30),
+	SEX BIT,
+	TUOI INT,
+	DIACHI NVARCHAR(100),
+	NGAYSINH DATE,
+	MABM CHAR(5)
+)
+GO
+
+ALTER TABLE dbo.GIAOVIEN ADD CONSTRAINT PK_GV PRIMARY KEY(MAGV)
+ALTER TABLE dbo.GIAOVIEN ADD CONSTRAINT FK_GV FOREIGN KEY(MABM) REFERENCES dbo.BOMON(MABM)
+
+GO
+
+--TAO BANG HOCSINH
+CREATE TABLE HOCSINH
+(
+	MAHS CHAR(5) NOT NULL,
+	TENHS NVARCHAR(30) DEFAULT N'NGUYEN QUOC',
+	MALOP CHAR(5)
+)
+GO
+ALTER TABLE dbo.HOCSINH ADD PRIMARY KEY(MAHS)
+ALTER TABLE dbo.HOCSINH ADD CONSTRAINT FK_HS FOREIGN KEY(MALOP) REFERENCES dbo.LOP(MALOP)
+
+-- THEM DU LIEU VAO BANG BOMON
+INSERT dbo.BOMON
+(
+    MABM,
+    TENBM
+)
+VALUES
+(   'BM001', -- MABM - char(5)
+    N'TOÁN' -- TENBM - nvarchar(30)
+    )
+INSERT dbo.BOMON
+(
+    MABM,
+    TENBM
+)
+VALUES
+(   'BM002', -- MABM - char(5)
+    N'VĂN' -- TENBM - nvarchar(30)
+    )
+INSERT dbo.BOMON
+(
+    MABM,
+    TENBM
+)
+VALUES
+(   'BM003', -- MABM - char(5)
+    N'LÝ' -- TENBM - nvarchar(30)
+    )
+
+GO
+
+-- THEM DU LIEU VAO BANG GIAOVIEN
+INSERT dbo.GIAOVIEN
+(
+    MAGV,
+    TENGV,
+    SEX,
+    TUOI,
+    DIACHI,
+    NGAYSINH,
+    MABM
+)
+VALUES
+(   'GV001',        -- MAGV - char(5)
+    N'NGUYEN LAN',       -- TENGV - nvarchar(30)
+    1,      -- SEX - bit
+    20,         -- TUOI - int
+    N'BUÔN MA THUẬT',       -- DIACHI - nvarchar(100)
+    GETDATE(), -- NGAYSINH - date
+    'BM001'         -- MABM - char(5)
+    )
+INSERT dbo.GIAOVIEN
+(
+    MAGV,
+    TENGV,
+    SEX,
+    TUOI,
+    DIACHI,
+    NGAYSINH,
+    MABM
+)
+VALUES
+(   'GV002',        -- MAGV - char(5)
+    N'NGUYEN DUNG',       -- TENGV - nvarchar(30)
+    1,      -- SEX - bit
+    20,         -- TUOI - int
+    N'BUÔN MA THUẬT',       -- DIACHI - nvarchar(100)
+    GETDATE(), -- NGAYSINH - date
+    'BM002'         -- MABM - char(5)
+    )
